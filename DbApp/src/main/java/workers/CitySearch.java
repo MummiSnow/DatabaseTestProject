@@ -16,7 +16,6 @@ public class CitySearch implements IWorker {
     //Neo4J
     Driver driver;
     Session session;
-    
     //Mongodb
     
     public CitySearch(String mongoDatabaseName,
