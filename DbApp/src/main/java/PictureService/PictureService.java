@@ -1,158 +1,44 @@
 package PictureService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 /**
  * Created by MJPS on 23/05/2017.
  */
-public class PictureService implements IService{
+public class PictureService implements IService {
+    
+    private InputStream inputStream;
+    private OutputStream outputStream;
+    
+    @Override
+    public void savePictureFromUrl(String url, String destionationFile) throws IOException {
+        
+        URL picurl = new URL(url);
+        inputStream = picurl.openStream();
+        outputStream = new FileOutputStream(destionationFile);
 
-    private final String LOG_TAG = "DbTestProject";
+        byte[] b = new byte[2048];
+        int length;
 
-    private final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
-    private final String GEOCODE_API_BASE = "https://maps.googleapis.com/maps/api";
-    private final String STATIC_API_BASE = "https://maps.googleapis.com/maps/api";
-
-    private final String TYPE_STATIC_MAP = "/staticmap?";
-    private final String TYPE_AUTOCOMPLETE = "/autocomplete";
-    private final String TYPE_DETAILS = "/details";
-    private final String TYPE_SEARCH = "/nearbysearch";
-    private final String TYPE_RGEOCODE = "/geocode";
-    private final String OUT_JSON = "/json?";
-
-    private final String API_KEY = "AIzaSyCSrSediuHzqqIbZC5JUvAEzEjiP9FDd8c";
-
-
-    private String lat;
-    private String lng;
-
-    public String getLat() {
-        return lat;
-    }
-
-    public String getLng() {
-        return lng;
-    }
-
-    private void setLat(String lat) {
-        this.lat = lat;
-    }
-
-    private void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    //Dependency injection for constructor
-    private StringBuilder sb;
-    private InputStream is;
-    private InputStreamReader in;
-    private OutputStream os;
-    private HttpURLConnection connection;
-
-    //Dependency injection Setter
-    private URL url;
-
-    public void setUrl(String url) throws MalformedURLException {
-        if (url == null) {
-            throw new InvalidParameterException("url must not be null");
-        }
-        this.url = new URL(url);
-    }
-    public URL getUrl(){return url;}
-
-
-
-    /**
-     * Constructor for getPictureFromLatLng
-     * @param sb, Stringbuilder that will append Strings (eg. https://maps.googleapis.com/maps...)
-     * @param is, Input stream for reading from the URL connection.
-     * @param os, Creates a file output stream to write to the file with the
-     * @param lat, latitude
-     * @param lng, longitude
-     * specified name
-     *
-     * */
-    public PictureService(StringBuilder sb, InputStream is, OutputStream os, String lat, String lng) throws FileNotFoundException {
-        this.sb = sb;
-        this.is = is;
-
-        if ((lat.length() != 0 || lat != "") && ( lng.length() != 0  || lng != "")) {
-            setLat(lat);
-            setLng(lng);
-            this.os = new FileOutputStream(lat+" "+lng+".png");
-        } else {
-            throw new FileNotFoundException("cannot create file, if lat and lng is null/empty");
+        while ((length = inputStream.read(b)) != -1) {
+            outputStream.write(b, 0, length);
         }
 
+        inputStream.close();
+        outputStream.close();
+        
+    
     }
-
-    /**
-     * @param zoom, the amount of detail needed:
-     *              1 = World
-     *              5 = Landmass/continent
-     *              10 = City
-     *              15 = Streets
-     *              20 = Buildings
-     * @param size, of the picture 640x640 is max for free.
-     * @return {@link URL}, picture url for later processing.
-     * */
-    public URL getPicture(int zoom, int size) {
-
-
-        try {
-
-            sb.append(STATIC_API_BASE);
-            sb.append(TYPE_STATIC_MAP);
-            sb.append("center="+getLat()+","+getLng());
-            sb.append("&zoom="+String.valueOf(zoom));
-            sb.append("&size="+size+"x"+size);
-            sb.append("&key=" + API_KEY);
-
-            setUrl(sb.toString());
-            is = getUrl().openStream();
-
-            byte[] b = new byte[2048];
-            int length;
-
-            while ((length = is.read(b)) != -1) {
-                os.write(b, 0,length);
-            }
-
-            is.close();
-            os.close();
-
-        } catch (IOException e) {
-            System.out.println("Error processing URL");
-            System.out.printf(e.toString());
-        }
-
-        return url;
-    }
-
-
-    /**
-     * Constructor for reverseGeocode
-     * @param sb, Stringbuilder that will append Strings (eg. https://maps.googleapis.com/maps...)
-     * @param connection, instance is used to make a single request
-     * @param in, an input stream that reads from an open connection
-     *
-     * */
-    public PictureService(StringBuilder sb, HttpURLConnection connection, InputStreamReader in) {
-        this.sb = sb;
-        this.connection = connection;
-        this.in = in;
-    }
-
+    
+    
+    
+    
+    
+    
+    //<editor-fold desc="reverseGeocode">
     /**
      * Returns an arraylist of places that is based on latitude and longitude and reverse geocode it
      * @param lat, latitude
@@ -160,7 +46,7 @@ public class PictureService implements IService{
      *
      * @return {@link ArrayList<Place>}
      * */
-    public ArrayList<Place> reverseGeocode(String lat, String lng) {
+    /*public ArrayList<Place> reverseGeocode(String lat, String lng) {
 
         //a seperate stringbuilder to hold values from json
         StringBuilder results = new StringBuilder();
@@ -222,9 +108,10 @@ public class PictureService implements IService{
 
         return resultList;
 
-    }
-
-    public ArrayList<Place> search(String keyword, String lat, String lng, int radius) {
+    }*/
+    //</editor-fold>
+    //<editor-fold desc="search">
+    /*public ArrayList<Place> search(String keyword, String lat, String lng, int radius) {
         HttpURLConnection connection = null;
         StringBuilder results = new StringBuilder();
 
@@ -286,9 +173,10 @@ public class PictureService implements IService{
 
         return resultList;
 
-    }
-
-    public Place details(String reference) {
+    }*/
+    //</editor-fold>
+    //<editor-fold desc="details">
+    /*public Place details(String reference) {
 
         StringBuilder results = new StringBuilder();
         try {
@@ -342,6 +230,10 @@ public class PictureService implements IService{
 
         return place;
 
-    }
+    }*/
+    //</editor-fold>
+    
+    
+    
 
 }

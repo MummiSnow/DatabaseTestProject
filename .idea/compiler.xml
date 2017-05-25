@@ -27,9 +27,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="BookParser" target="1.5" />
-      <module name="DatabaseFinalProject" target="1.5" />
-      <module name="DbApp" target="1.5" />
+      <module name="BookParser" target="1.8" />
+      <module name="DatabaseFinalProject" target="1.8" />
+      <module name="DbApp" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

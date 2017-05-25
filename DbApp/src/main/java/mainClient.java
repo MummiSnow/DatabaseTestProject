@@ -1,6 +1,7 @@
 import exceptions.InputException;
 import asg.cliche.Command;
 import asg.cliche.Param;
+import PictureService.*;
 
 import java.io.IOException;
 
@@ -36,8 +37,15 @@ public class mainClient {
     }
 
     public static void main(String[] args) throws InputException, IOException {
-        mainClient m = new mainClient();
-        m.citySearch("Roskilde");
+        IService service = new PictureService();
+        IUrlFetcher fetcher = new GoogleURL(new StringBuilder());
+        
+        Place place = fetcher.createUrl("36.57288","69.85783",16,640);
+    
+        service.savePictureFromUrl(fetcher.getUrl(),place.getLat()+" "+place.getLng()+".png");
+        
+        //mainClient m = new mainClient();
+        //m.citySearch("Roskilde");
         /*
         Shell shell = ShellFactory.createConsoleShell("Books<^.^", "Welcome to books-console! \n\n?help for instructions\n?list for a list of commands\n\n", m);
         shell.commandLoop();
