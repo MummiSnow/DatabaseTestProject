@@ -46,9 +46,13 @@ public class GoogleURL implements IUrlFetcher {
 		if ((lat.length() != 0 || lat != "") && ( lng.length() != 0  || lng != "")) {
 			this.lat = lat;
 			this.lng = lng;
+		} else {
+			throw new IllegalArgumentException("Latitude and Longitude must not be null or empty");
 		}
 		if (zoom != 0 || zoom <= 20) {
 			this.zoom = zoom;
+		} else {
+			throw new IllegalArgumentException("Zoom must be between 0 and 20");
 		}
 		this.size = size;
 		sb.append(STATIC_API_BASE);

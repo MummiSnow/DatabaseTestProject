@@ -33,12 +33,10 @@ public class CitySearchTest {
     @Ignore("Test fails due to problems with external mongo disallowing all\n incoming requests from other IP's than loopback")
     @Test
     public void CorrectUse() throws InputException, UnknownHostException {
-
         worker = new CitySearch("FinalDatabaseProject",
                 "Books",
                 new InetSocketAddress(InetAddress.getByName("165.227.128.49"),7687),
                 new MongoClient(new MongoClientURI("mongodb://207.154.228.197:27017")));
-
     }
 
     @Test(expected = InputException.class)

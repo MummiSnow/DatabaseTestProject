@@ -1,6 +1,7 @@
 package PictureService;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -122,10 +123,22 @@ public class PlaceTest {
 	}
 	
 	
-	@Test (expected = MalformedURLException.class)
+	@Test
 	public void testThrowsIOExceptionIfDestinationNameIsADirectory() {
-		Place placeFail = new Place(service,fetcher,"36.57288","69.85783",16,640);
-		//Mockito cant test Exceptions on void methods
+		try {
+			doThrow(new IOException()).when(service).savePictureFromUrl(anyString(),eq("src"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testThrowsMalformedURLExceptionIfURLIsNotCreatedSuccessfully() {
+		try {
+			doThrow(new MalformedURLException()).when(service).savePictureFromUrl(eq("rr"),anyString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test (expected = NullPointerException.class)

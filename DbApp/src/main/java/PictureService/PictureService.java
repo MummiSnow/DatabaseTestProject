@@ -32,11 +32,6 @@ public class PictureService implements IService {
     
     }
     
-    
-    
-    
-    
-    
     //<editor-fold desc="reverseGeocode">
     /**
      * Returns an arraylist of places that is based on latitude and longitude and reverse geocode it
