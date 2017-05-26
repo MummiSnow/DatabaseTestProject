@@ -19,6 +19,9 @@ public class Place {
     private String lng;
     private int zoom;
     private int size;
+    private String url;
+    
+    public String getUrl() {return url;}
     
     //Program Specific
     public String getLat() {
@@ -64,9 +67,13 @@ public class Place {
     }
     
     
-    public Place(IService service, IUrlFetcher fetcher) {
+    public Place(IService service, IUrlFetcher fetcher, String lat, String lng, int zoom, int size) {
         this.service = service;
         this.fetcher = fetcher;
+        this.lat = lat;
+        this.lng = lng;
+        this.zoom = zoom;
+        this.size = size;
     }
     
     public Place(String lat, String lng, int zoom, int size) {
@@ -78,18 +85,10 @@ public class Place {
     
     public Place getPicture(String nameOfFile) throws IOException {
         Place place = fetcher.createUrl(lat, lng,zoom,size);
-        service.savePictureFromUrl(fetcher.getUrl(),nameOfFile);
+        this.url = fetcher.getUrl();
+        service.savePictureFromUrl(url,nameOfFile);
         return place;
         
     }
     
-    
-
-    @Override
-    public String toString() {
-        return "Place{" +
-                "reference='" + reference + '\'' +
-                ", formattedAddress='" + formattedAddress + '\'' +
-                '}';
-    }
 }

@@ -40,10 +40,12 @@ public class mainClient {
         IService service = new PictureService();
         IUrlFetcher fetcher = new GoogleURL(new StringBuilder());
         
-        Place place = fetcher.createUrl("36.57288","69.85783",16,640);
-    
-        service.savePictureFromUrl(fetcher.getUrl(),place.getLat()+" "+place.getLng()+".png");
-        
+        Place place = new Place(service,fetcher,"36.57288","69.85783",16,640);
+        //place.getPicture(place.getLat()+" "+place.getLng()+".png");
+        //place.getPicture("src");
+        //service.savePictureFromUrl("rr","src");
+        fetcher.createUrl("","",16,640);
+        //service.savePictureFromUrl(fetcher.getUrl(),place.getLat()+" "+place.getLng()+".png");
         //mainClient m = new mainClient();
         //m.citySearch("Roskilde");
         /*
