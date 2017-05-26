@@ -1,19 +1,30 @@
-import exceptions.InputException;
-import workers.CitySearch;
-import workers.IWorker;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import exceptions.InputException;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.neo4j.driver.v1.exceptions.ServiceUnavailableException;
+import workers.CitySearch;
+import workers.IWorker;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CitySearchTest {
 
+    @Mock IWorker mockedWorker;
     IWorker worker = null;
 
     //region Black box input tests
@@ -27,6 +38,7 @@ public class CitySearchTest {
                 "Books",
                 new InetSocketAddress(InetAddress.getByName("165.227.128.49"),7687),
                 new MongoClient(new MongoClientURI("mongodb://207.154.228.197:27017")));
+
     }
 
     @Test(expected = InputException.class)
@@ -147,6 +159,7 @@ public class CitySearchTest {
                 new MongoClient(new MongoClientURI("mongodb://207.154.228.197:27017")));
     }
 
+    @Ignore("Servers wen't down on May 25th.")
     @Test(expected = NullPointerException.class)
     public void NullMongoClient() throws InputException, UnknownHostException {
 
@@ -209,4 +222,12 @@ public class CitySearchTest {
 
     //endregion
 
+
+    @Test
+    public void mockCitySearch() throws Exception, InputException {
+        given(mockedWorker.Search("Roskilde")).willReturn("Test passing");
+        verify(mockedWorker, times(0)).Search(anyString());
+        Assert.assertThat(mockedWorker.Search("Roskilde"),is("Test passing"));
+        verify(mockedWorker, times(1)).Search(anyString());
+    }
 }
