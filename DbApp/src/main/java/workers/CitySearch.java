@@ -78,7 +78,7 @@ public class CitySearch implements IWorker {
     
     //Work method(s)
     @Override
-    public void Search(String searchString) throws InputException {
+    public String Search(String searchString) throws InputException {
         //region Logic for input values
         if (searchString == null) throw new NullPointerException();
         Pattern p = Pattern.compile("[A-z]+");
@@ -99,6 +99,8 @@ public class CitySearch implements IWorker {
         session.close();
         driver.close();
         //endregion
+        return "Method has called";
+
     }
 
 

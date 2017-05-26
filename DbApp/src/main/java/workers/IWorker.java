@@ -13,5 +13,5 @@ public interface IWorker {
     void MongoConnect(String databaseName, String collectionName, MongoClient mongoClient);
 
     //Work method(s)
-    void Search(String searchString) throws InputException;
+    String Search(String searchString) throws InputException;
 }
