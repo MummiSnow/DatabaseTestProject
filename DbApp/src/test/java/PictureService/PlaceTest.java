@@ -41,8 +41,8 @@ public class PlaceTest {
 	@Before
 	public void setUp() throws Exception {
 		//Alternate way of Mocking
-		fetcher = mock(GoogleURL.class);
-		service = mock(PictureService.class);
+		fetcher = mock(IUrlFetcher.class);
+		service = mock(IService.class);
 		
 		place = new Place(service,fetcher,"36.57288","69.85783",16,640);
 		//placeWithNoParams = new Place(service,fetcher,anyString(),anyString(),anyInt(),anyInt());
@@ -118,8 +118,21 @@ public class PlaceTest {
 	
 	
 	@Test
-	public void testThatSavePictureIsCalledOnce() throws IOException {
-		verify(service, times(1)).savePictureFromUrl(anyString(),anyString());
+	public void test2() {
+		try {
+			verify(service, times(1)).savePictureFromUrl(anyString(), anyString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testThatSavePictureIsCalledOnce() {
+		try {
+			verify(service, times(1)).savePictureFromUrl(anyString(),anyString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

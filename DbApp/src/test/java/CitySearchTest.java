@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.driver.v1.exceptions.ServiceUnavailableException;
 import workers.CitySearch;
 import workers.IWorker;
@@ -16,8 +16,8 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
