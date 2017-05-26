@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/flaps16/DatabaseFinalProject.svg?branch=master)](https://travis-ci.org/flaps16/DatabaseFinalProject)
+[![Build Status](https://travis-ci.org/MummiSnow/DatabaseTestProject.svg?branch=master)](https://travis-ci.org/MummiSnow/DatabaseTestProject)
 # DatabaseTestProject
 by Anders Geer Jakobsen and Mohammed Salameh
 
